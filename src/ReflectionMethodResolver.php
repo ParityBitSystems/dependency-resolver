@@ -8,8 +8,6 @@ abstract class ReflectionMethodResolver extends Resolver
     {
         $dependencies = [];
 
-        $method = $reflected->getConstructor();
-
         foreach ($method->getParameters() as $parameter) {
 
             $default = $parameter->getDefaultValue();
