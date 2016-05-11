@@ -10,8 +10,6 @@ abstract class ReflectionMethodResolver extends Resolver
 
         foreach ($method->getParameters() as $parameter) {
 
-            $default = $parameter->getDefaultValue();
-
             $hint = $parameter->getClass();
             if (!is_null($hint)) {
                 if ($this->map->hasConfiguration($hint->getName())) {
@@ -27,7 +25,13 @@ abstract class ReflectionMethodResolver extends Resolver
                 continue;
             }
 
-            $dependencies[] = $default;
+            if (!$parameter->isOptional()) {
+                throw new \LogicException('No configuration provided for a non-optional parameter');
+            }
+
+            $dependencies[] = $parameter->getDefaultValue();
         }
+
+        return $dependencies;
     }
 }
