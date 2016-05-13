@@ -6,6 +6,9 @@
 	"require": {
 		"php": ">=5.4.0"
 	},
+    "require-dev": {
+		"phpunit/phpunit": "4.0.*"
+	},
 	"authors": [
 		{
 			"name": "Michael Peacock",
