@@ -13,6 +13,6 @@ class CallableResolution implements Resolution
 
     public function getDependency()
     {
-        return call_user_func($this->callable)
+        return call_user_func($this->callable);
     }
 }
