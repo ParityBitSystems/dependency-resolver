@@ -63,9 +63,6 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testMissingConfigurationForNonOptionalDependency()
     {
-        $this->dependency = new \stdClass;
-        $this->dependency->data = ['some', 'data', 'no-type-hint-provided'];
-
         $method = new \ReflectionMethod($this, 'nonTypeHintedNonConfiguredDependencies');
 
         $this->setExpectedException('LogicException');
@@ -73,6 +70,24 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
     }
 
     public function nonTypeHintedNonConfiguredDependencies($otherDependency)
+    {
+
+    }
+
+    public function testMissingConfigurationForOptionalDependency()
+    {
+        $method = new \ReflectionMethod($this, 'nonTypeHintedNonConfiguredDependenciesWithDefault');
+
+        $dependencies = $this->getDependencies($method);
+
+        $this->assertCount(1, $dependencies);
+
+        if (1 == count($dependencies)) {
+            $this->assertEquals('default_value', $dependencies[0]);
+        }
+    }
+
+    public function nonTypeHintedNonConfiguredDependenciesWithDefault($otherDependency = 'default_value')
     {
 
     }
