@@ -2,7 +2,7 @@
 
 namespace ParityBit\DependencyResolver;
 
-use ParityBit\DependencyResolver\Exceptions\DependentClassNotFound;
+use ParityBit\DependencyResolver\Exceptions\DependentMethodNotFound;
 
 class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
 {
@@ -92,6 +92,13 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testDependentMethodNotFound()
+    {
+        $hasDependencies = new HasMethodDependencies();
+        $this->setExpectedException(DependentMethodNotFound::class);
+        $this->resolver->resolveFromObjectAndMethod($hasDependencies, 'nonExistantMethod');
+    }
+
     protected function getDependencies($methodWithDependencies, $type = null)
     {
         $dependencyMap = $this->getMockBuilder(DependencyMap::class)
@@ -124,9 +131,6 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
                           ->with($this->equalTo('otherDependency'))
                           ->will($this->returnValue(false));
         }
-
-
-
 
         $resolver = new ReflectionMethodResolver($dependencyMap);
 
