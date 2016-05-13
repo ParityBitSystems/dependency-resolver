@@ -1,4 +1,4 @@
-# Simple ependency resolver
+# Simple dependency resolver
 
 [![Coverage Status](https://coveralls.io/repos/github/ParityBitSystems/dependency-resolver/badge.svg?branch=master)](https://coveralls.io/github/ParityBitSystems/dependency-resolver?branch=master) [![Build Status](https://travis-ci.org/ParityBitSystems/dependency-resolver.svg?branch=master)](https://travis-ci.org/ParityBitSystems/dependency-resolver)
 
