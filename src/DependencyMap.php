@@ -3,6 +3,7 @@
 namespace ParityBit\DependencyResolver;
 
 use ParityBit\DependencyResolver\DependencyConfigurations\Resolution;
+use ParityBit\DependencyResolver\Exceptions\DependencyNotFound;
 
 /**
  * A dependency resolution map
@@ -11,7 +12,6 @@ use ParityBit\DependencyResolver\DependencyConfigurations\Resolution;
  */
 class DependencyMap
 {
-    protected $container;
     protected $mapping = [];
 
     /**
@@ -48,7 +48,7 @@ class DependencyMap
     public function resolveDependency($dependencyName)
     {
         if (!array_key_exists($dependencyName, $this->mapping)) {
-            throw new \Exception('Dependency Not Found');
+            throw new DependencyNotFound('Dependency Not Found');
         }
 
         return $this->mapping[$dependencyName]->getDependency();
