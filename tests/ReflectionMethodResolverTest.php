@@ -143,4 +143,12 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
             throw $e;
         }
     }
+
+    public function testThrowsCaughtExceptionOnInvokation()
+    {
+        // This exception is a test one, to test when invokation throws an
+        // exception the exception is re-thrown
+        $this->setExpectedException(InvokationRelatedException::class);
+        $this->resolver->resolveFromObjectAndMethod(new HasMethodDependencies(), 'exceptionOnInvokation');
+    }
 }

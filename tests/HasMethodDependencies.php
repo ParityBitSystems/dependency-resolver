@@ -8,4 +8,9 @@ class HasMethodDependencies
     {
 
     }
+
+    public function exceptionOnInvokation()
+    {
+        throw new InvokationRelatedException();
+    }
 }

@@ -49,4 +49,12 @@ class ConstructorArgumentResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($dependency, $resolved->getDependency());
     }
+
+    public function testThrowsCaughtExceptionOnInvokation()
+    {
+        // This exception is a test one, to test when invokation throws an
+        // exception the exception is re-thrown
+        $this->setExpectedException(InvokationRelatedException::class);
+        $this->resolver->resolveFromConstructorArguments(ExceptionTriggeringConstructor::class);
+    }
 }
