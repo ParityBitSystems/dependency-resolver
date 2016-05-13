@@ -41,6 +41,21 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testTypeHintedButConfiguredAsNonTypeHinted()
+    {
+        $this->dependency = new \stdClass;
+        $this->dependency->data = ['some', 'data', 'no-type-hint-provided'];
+
+        $method = new \ReflectionMethod($this, 'typeHintedMethod');
+        $dependencies = $this->getDependencies($method, 'type-hinted-non-type-hint-configuration');
+
+        $this->assertCount(1, $dependencies);
+
+        if (1 == count($dependencies)) {
+            $this->assertEquals($this->dependency, $dependencies[0]);
+        }
+    }
+
     public function testNonTypeHintedDependencies()
     {
         $this->dependency = new \stdClass;
@@ -114,6 +129,21 @@ class ReflectionMethodResolverTest extends \PHPUnit_Framework_TestCase
             $dependencyMap->expects($this->once())
                         ->method('resolveDependency')
                         ->with($this->equalTo(ExampleDependency::class))
+                        ->will($this->returnValue($this->dependency));
+        } elseif ($type == 'type-hinted-non-type-hint-configuration') {
+            $dependencyMap->expects($this->at(0))
+                          ->method('hasConfiguration')
+                          ->with($this->equalTo(ExampleDependency::class))
+                          ->will($this->returnValue(false));
+
+           $dependencyMap->expects($this->at(1))
+                        ->method('hasConfiguration')
+                        ->with($this->equalTo('dependency'))
+                        ->will($this->returnValue(true));
+
+            $dependencyMap->expects($this->once())
+                        ->method('resolveDependency')
+                        ->with($this->equalTo('dependency'))
                         ->will($this->returnValue($this->dependency));
         } elseif ($type == 'no-type-hint') {
             $dependencyMap->expects($this->once())
