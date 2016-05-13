@@ -1,4 +1,6 @@
-# Specific use case dependency resolver
+# Simple ependency resolver
+
+[![Coverage Status](https://coveralls.io/repos/github/ParityBitSystems/dependency-resolver/badge.svg?branch=master)](https://coveralls.io/github/ParityBitSystems/dependency-resolver?branch=master) [![Build Status](https://travis-ci.org/ParityBitSystems/dependency-resolver.svg?branch=master)](https://travis-ci.org/ParityBitSystems/dependency-resolver)
 
 A simple framework for resolving dependencies in code and managing a mapping of
 configurations to determine how specific dependencies should be resolved.
