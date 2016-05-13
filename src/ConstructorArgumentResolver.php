@@ -2,6 +2,8 @@
 
 namespace ParityBit\DependencyResolver;
 
+use ParityBit\DependencyResolver\Exceptions\DependentClassNotFound;
+
 class ConstructorArgumentResolver extends ReflectionMethodResolver
 {
     /**
@@ -13,7 +15,14 @@ class ConstructorArgumentResolver extends ReflectionMethodResolver
      */
     public function resolveFromConstructorArguments($className)
     {
-        $reflected = new \ReflectionClass($className);
+        try {
+            $reflected = new \ReflectionClass($className);
+        } catch (\Exception $e) {
+            // TODO: check if its always ReflectionException thrown when
+            // the class isn't found and account for that instead
+            throw new DependentClassNotFound('Dependent class ' . $className . ' not found', 0, $e);
+        }
+
         $constructor = $reflected->getConstructor();
 
         $dependencies = $this->getDependenciesFromReflectionMethod($constructor);
